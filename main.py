@@ -418,17 +418,7 @@ async def handle_ping(request):
     return web.Response(text="Bot is running!")
 
 async def self_ping():
-    await asyncio.sleep(30)
-    url = os.getenv("RENDER_EXTERNAL_URL")
-    if url:
-        while True:
-            try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        logging.info(f"Пинг отправлен. Статус: {response.status}")
-            except Exception as e:
-                logging.error(f"Ошибка пинга: {e}")
-            await asyncio.sleep(300)
+
 
 async def start_web_server():
     app = web.Application()
