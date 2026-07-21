@@ -36,12 +36,17 @@ def get_main_menu():
 
 @dp.message(CommandStart())
 async def cmd_start(message: types.Message):
-    welcome = (
-        f"Привет, {message.from_user.first_name}! 👞\n\n"
-        "Добро пожаловать в **Энциклопедию Сапожника**.\n"
-        "Выбери нужный раздел:"
+    welcome_text = (
+        f"Приветствую, **{message.from_user.first_name}**! 🤝\n\n"
+        "🏛 **Добро пожаловать в «Энциклопедию Сапожника»**\n"
+        "Ваш профессиональный цифровой помощник в мире конструирования, ремонта и ухода за обувью.\n\n"
+        "Этот проект создан для объединения мастеров и свободного обмена знаниями. Здесь собрано всё необходимое для работы:\n"
+        "🔹 *Проверенные технологии и стандарты*\n"
+        "🔹 *Справочники по химии, клеям и материалам*\n"
+        "🔹 *Удобные калькуляторы и бесплатные лекала*\n\n"
+        "👇 **Выберите интересующий раздел меню, чтобы начать:**"
     )
-    await message.answer(welcome, reply_markup=get_main_menu(), parse_mode="Markdown")
+    await message.answer(welcome_text, reply_markup=get_main_menu(), parse_mode="Markdown")
 
 @dp.callback_query(lambda c: c.data.startswith('menu_'))
 async def process_menu(callback: types.CallbackQuery):
@@ -72,26 +77,29 @@ async def process_menu(callback: types.CallbackQuery):
 
 @dp.callback_query(lambda c: c.data == "back_main")
 async def back_main(callback: types.CallbackQuery):
-    await callback.message.edit_text("Выбери нужный раздел:", reply_markup=get_main_menu(), parse_mode="Markdown")
+    back_text = (
+        "🏛 **Главное меню «Энциклопедии Сапожника»**\n\n"
+        "👇 **Выберите интересующий раздел:**"
+    )
+    await callback.message.edit_text(back_text, reply_markup=get_main_menu(), parse_mode="Markdown")
     await callback.answer()
 
-# Веб-сервер для Render
+# === ВЕБ-СЕРВЕР И АНТИ-СОН ДЛЯ RENDER ===
 async def handle_ping(request):
     return web.Response(text="Bot is running!")
 
-# Функция само-пробуждения (чтобы сервер не засыпал)
 async def self_ping():
-    await asyncio.sleep(30)  # Ждем 30 секунд после старта
+    await asyncio.sleep(30)  # Даем серверу время запуститься
     url = os.getenv("RENDER_EXTERNAL_URL")
     if url:
         while True:
             try:
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
-                        logging.info(f"Self-ping status: {response.status}")
+                        logging.info(f"Пинг отправлен. Статус: {response.status}")
             except Exception as e:
-                logging.error(f"Self-ping error: {e}")
-            await asyncio.sleep(300)  к каждые 5 минут
+                logging.error(f"Ошибка пинга: {e}")
+            await asyncio.sleep(300)  # Повторять каждые 5 минут
 
 async def start_web_server():
     app = web.Application()
@@ -104,7 +112,7 @@ async def start_web_server():
 
 async def main():
     await start_web_server()
-    asyncio.create_task(self_ping())  # Запускаем пинг в фоновом режиме
+    asyncio.create_task(self_ping())  # Запуск фонового пинга
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
