@@ -18,17 +18,7 @@ if not BOT_TOKEN:
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
-    # Порт для Render и UptimeRobot
-    port = int(os.environ.get("PORT", 10000))
-
-    app = web.Application()
-    app.router.add_get("/", lambda r: web.Response(text="Bot is alive!", status=200))
     
-    runner = web.AppRunner(app)
-    await runner.setup()
-    site = web.TCPSite(runner, "0.0.0.0", port)
-    await site.start()
-    logging.info(f"HTTP-сервер запущен на порту {port}")
 
 # ==========================================
 # 🏛 ГЛАВНОЕ МЕНЮ (12 РАЗДЕЛОВ)
