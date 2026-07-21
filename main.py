@@ -412,15 +412,27 @@ async def process_checklists(callback: types.CallbackQuery):
     await callback.answer()
 
 # ==========================================
-# 🌐 ВЕБ-СЕРВЕР И АНТИ-СОН (RENDER)
 # ==========================================
+# 🌐 KEEP-ALIVE (анти-сон) + ВЕБ-СЕРВЕР
+# ==========================================
+
 async def handle_ping(request):
-    return web.Response(text="Bot is running!")
+    return web.Response(text="Bot is running! ✅")
 
 async def self_ping():
+    """Каждые 5 минут пингует сам себя, чтобы бот не засыпал"""
+    while True:
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"http://0.0.0.0:{os.environ.get('PORT', 8080)}") as resp:
+                    logging.info(f"Self-ping OK → {resp.status}")
+        except Exception as e:
+            logging.warning(f"Self-ping error: {e}")
+        await asyncio.sleep(300)  # 5 минут
 
 
 async def start_web_server():
+    """Запускает веб-сервер для keep-alive"""
     app = web.Application()
     app.router.add_get('/', handle_ping)
     runner = web.AppRunner(app)
@@ -428,13 +440,19 @@ async def start_web_server():
     port = int(os.environ.get("PORT", 8080))
     site = web.TCPSite(runner, '0.0.0.0', port)
     await site.start()
+    logging.info(f"Web server started on port {port}")
+
 
 async def main():
+    # Запускаем веб-сервер
     await start_web_server()
+    
+    # Запускаем само-пинг в фоне
     asyncio.create_task(self_ping())
+    
+    logging.info("Бот запущен и готов к работе")
     await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
     asyncio.run(main())
-
