@@ -1,6 +1,5 @@
-from aiogram import types
+from aiogram import types, F
 from aiogram import Router
-from aiogram.filters import F
 
 from keyboards import get_main_menu
 
@@ -11,16 +10,15 @@ async def process_main_menu(callback: types.CallbackQuery):
     """Обработка нажатий на главное меню"""
     section = callback.data.split('_')[1]
     
-    # Временная заглушка
     text = f"📌 **Раздел:** {section.upper()}\n\nКонтент в разработке..."
     
     await callback.message.edit_text(
         text,
-        reply_markup=get_main_menu("ru"),   # пока русский
+        reply_markup=get_main_menu("ru"),
         parse_mode="Markdown"
     )
     await callback.answer()
 
 
-def register_main_menu_handlers(dp: Dispatcher):
+def register_main_menu_handlers(dp):
     dp.include_router(router)
