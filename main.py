@@ -8,9 +8,6 @@ from aiogram import Bot, Dispatcher
 from config import BOT_TOKEN
 from handlers.base import cmd_start, process_language
 from handlers.main_menu import register_main_menu_handlers
-# from handlers.sizes import register_sizes_handlers
-# from handlers.calculators import register_calculators_handlers
-# ... добавляй по мере создания
 
 from utils.keepalive import handle_ping, self_ping
 
@@ -22,19 +19,20 @@ dp = Dispatcher()
 
 
 async def main():
-    """Основная функция запуска бота"""
+    """Главная функция запуска бота"""
     
-    # === Регистрация всех обработчиков ===
-    dp.message.register(cmd_start, lambda message: True)   # /start
+    # Регистрация обработчиков
+    dp.message.register(cmd_start, lambda m: True)
     
-    # register_main_menu_handlers(dp)
-    # register_sizes_handlers(dp)
-    # register_calculators_handlers(dp)
-    # ... другие обработчики
+    # Регистрация callback'ов
+    dp.callback_query.register(process_language, lambda c: c.data.startswith("lang_"))
+    
+    # Регистрация главного меню
+    register_main_menu_handlers(dp)
 
-    logging.info("Бот запущен. Ожидание команд...")
+    logging.info("Бот успешно запущен!")
 
-    # === Запуск Keep-Alive сервера ===
+    # === Keep-Alive веб-сервер ===
     app = web.Application()
     app.router.add_get('/', handle_ping)
     
@@ -45,12 +43,10 @@ async def main():
     site = web.TCPSite(runner, '0.0.0.0', port)
     await site.start()
     
-    logging.info(f"Web-сервер запущен на порту {port}")
+    logging.info(f"Keep-alive сервер запущен на порту {port}")
 
-    # Запуск само-пинга в фоне
     asyncio.create_task(self_ping())
 
-    # Запуск бота
     await dp.start_polling(bot)
 
 
