@@ -5,8 +5,8 @@ from aiogram.types import InlineKeyboardButton
 def get_language_keyboard():
     """Клавиатура выбора языка"""
     builder = InlineKeyboardBuilder()
-    builder.row(InlineKeyboardButton(text="Русский", callback_data="lang_ru"))
-    builder.row(InlineKeyboardButton(text="Українська", callback_data="lang_uk"))
+    builder.row(InlineKeyboardButton(text=" Русский", callback_data="lang_ru"))
+    builder.row(InlineKeyboardButton(text=" Українська", callback_data="lang_uk"))
     return builder.as_markup()
 
 
