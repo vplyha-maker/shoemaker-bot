@@ -1,6 +1,7 @@
 import os
 import asyncio
 import logging
+import aiohttp
 from aiohttp import web
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import CommandStart
@@ -19,7 +20,6 @@ dp = Dispatcher()
 
 def get_main_menu():
     builder = InlineKeyboardBuilder()
-    # Размещаем по одной кнопке в ряд, чтобы длинный текст не обрезался на экранах телефонов
     builder.row(InlineKeyboardButton(text="📐 Размеры, Мерки и Ортопедия", callback_data="menu_sizes"))
     builder.row(InlineKeyboardButton(text="👞 Фасоны и Конструкции", callback_data="menu_styles"))
     builder.row(InlineKeyboardButton(text="🧪 Материалы и Химия", callback_data="menu_chemistry"))
@@ -41,12 +41,10 @@ async def cmd_start(message: types.Message):
         "Добро пожаловать в **Энциклопедию Сапожника**.\n"
         "Выбери нужный раздел:"
     )
-    # Используем parse_mode="Markdown" для красивого форматирования текста
     await message.answer(welcome, reply_markup=get_main_menu(), parse_mode="Markdown")
 
 @dp.callback_query(lambda c: c.data.startswith('menu_'))
 async def process_menu(callback: types.CallbackQuery):
-    # Словарь с заготовками текстов для каждого раздела
     sections_info = {
         "sizes": "📐 **Размеры, Мерки и Ортопедия**\n\nЗдесь будут: Размерные сетки, полнота стопы, инструкции, особенности.",
         "styles": "👞 **Фасоны и Конструкции**\n\nЗдесь будут: Классификация обуви, методы крепления подошвы, колодки.",
@@ -65,7 +63,6 @@ async def process_menu(callback: types.CallbackQuery):
     section = callback.data.split('_')[1]
     text = sections_info.get(section, "🚧 Раздел в разработке.")
 
-    # Кнопка возврата в главное меню
     back_kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="⬅️ Назад в меню", callback_data="back_main")]
     ])
@@ -78,9 +75,23 @@ async def back_main(callback: types.CallbackQuery):
     await callback.message.edit_text("Выбери нужный раздел:", reply_markup=get_main_menu(), parse_mode="Markdown")
     await callback.answer()
 
-# Веб-сервер заглушка для Render (чтобы хостинг работал бесплатно и не отключался)
+# Веб-сервер для Render
 async def handle_ping(request):
     return web.Response(text="Bot is running!")
+
+# Функция само-пробуждения (чтобы сервер не засыпал)
+async def self_ping():
+    await asyncio.sleep(30)  # Ждем 30 секунд после старта
+    url = os.getenv("RENDER_EXTERNAL_URL")
+    if url:
+        while True:
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        logging.info(f"Self-ping status: {response.status}")
+            except Exception as e:
+                logging.error(f"Self-ping error: {e}")
+            await asyncio.sleep(300)  к каждые 5 минут
 
 async def start_web_server():
     app = web.Application()
@@ -93,7 +104,9 @@ async def start_web_server():
 
 async def main():
     await start_web_server()
+    asyncio.create_task(self_ping())  # Запускаем пинг в фоновом режиме
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
+
