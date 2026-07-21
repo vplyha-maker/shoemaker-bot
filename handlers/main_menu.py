@@ -1,25 +1,26 @@
 from aiogram import types
 from aiogram import Router
-from aiogram.filters import Text
+from aiogram.filters import F
 
 from keyboards import get_main_menu
 
 router = Router()
 
-@router.callback_query(Text(startswith="menu_"))
+@router.callback_query(F.data.startswith("menu_"))
 async def process_main_menu(callback: types.CallbackQuery):
     """Обработка нажатий на главное меню"""
     section = callback.data.split('_')[1]
     
-    text = f"Раздел: {section.upper()}"   # временная заглушка
+    # Временная заглушка
+    text = f"📌 **Раздел:** {section.upper()}\n\nКонтент в разработке..."
     
     await callback.message.edit_text(
         text,
-        reply_markup=get_main_menu(user_language.get(callback.from_user.id, "ru"))
+        reply_markup=get_main_menu("ru"),   # пока русский
+        parse_mode="Markdown"
     )
     await callback.answer()
 
 
-# Функция регистрации (будем использовать в main.py)
-def register_main_menu_handlers(dp):
+def register_main_menu_handlers(dp: Dispatcher):
     dp.include_router(router)
