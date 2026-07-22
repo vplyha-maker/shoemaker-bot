@@ -45,16 +45,7 @@ async def process_sub_styles(callback: types.CallbackQuery):
     )
 
 
-# 3. Нажатие на «Конструкции сборки» (Заглушка)
-@router.callback_query(F.data == "sub_constructions")
-async def process_sub_constructions(callback: types.CallbackQuery):
-    lang = user_language.get(callback.from_user.id, "ru")
-    text = (
-        "⚙️ **Раздел «Конструкции сборки» находится в разработке.**\n\nСкоро здесь появятся материалы по рантовому методу (Goodyear Welted), Клеевому, Врантовому (Blake) и др."
-        if lang == "ru" else
-        "⚙️ **Розділ «Конструкції збирання» перебуває в розробці.**\n\nСкоро тут з'являться матеріали про рантовий метод (Goodyear Welted), Клейовий, Блейк (Blake) тощо."
-    )
-    await callback.answer(text, show_alert=True)
+
 
 
 # 4. Отображение выбранного фасона (4 подкнопки)
