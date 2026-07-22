@@ -5,18 +5,13 @@ from keyboards import get_main_menu
 
 router = Router()
 
-@router.callback_query(F.data.startswith("menu_"))
+# Ловим всё на główное меню, КРОМЕ "menu_styles"
+@router.callback_query(F.data.startswith("menu_") & (F.data != "menu_styles"))
 async def process_main_menu(callback: types.CallbackQuery):
-    """Обработка нажатий на главное меню"""
+    """Обработка нажатий на главное меню для разделов-заглушек"""
     section = callback.data.split('_')[1]
     
-    # ЕСЛИ РАЗДЕЛ УЖЕ РЕАЛИЗОВАН — ПРОПУСКАЕМ ЕГО, 
-    # чтобы сработал его собственный файл-обработчик (например, handlers/styles.py)
-    if section == "styles":
-        return
-    
-    # Для остальных пока еще нереализованных разделов оставляем заглушку
-    lang = "ru" # Здесь можно будет тоже подтягивать язык, если нужно
+    lang = "ru"
     text = f"📌 **Раздел:** {section.upper()}\n\nКонтент в разработке..."
     
     await callback.message.edit_text(
@@ -29,3 +24,4 @@ async def process_main_menu(callback: types.CallbackQuery):
 
 def register_main_menu_handlers(dp):
     dp.include_router(router)
+
