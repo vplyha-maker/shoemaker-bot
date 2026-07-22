@@ -50,6 +50,7 @@ async def main():
     register_constructions_handlers(dp)
     register_materials_handlers(dp)
     register_colors_handlers(dp)
+    register_glossary_handlers(dp)
     
     
     dp.message.register(cmd_start, lambda m: True)
