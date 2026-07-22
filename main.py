@@ -13,6 +13,8 @@ from handlers.styles import register_styles_handlers
 from handlers.constructions import register_constructions_handlers
 from handlers.materials import register_materials_handlers
 from handlers.colors import register_colors_handlers
+from handlers.glossary import register_glossary_handlers
+
 
 
 
