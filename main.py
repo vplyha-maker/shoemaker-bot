@@ -12,6 +12,8 @@ from handlers.main_menu import register_main_menu_handlers
 from handlers.styles import register_styles_handlers
 from handlers.constructions import register_constructions_handlers
 from handlers.materials import register_materials_handlers
+from handlers.calculators import register_calculators_handlers
+from handlers.colors import register_colors_handlers
 
 from utils.keepalive import handle_ping, self_ping
 
@@ -24,7 +26,6 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 WEBHOOK_PATH = "/webhook"
-# Важно: используй https:// и полный домен от Render
 WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://shoemaker-bot.onrender.com")
 
 
@@ -42,11 +43,13 @@ async def on_shutdown(app: web.Application):
 
 
 async def main():
-    # Регистрация обработчиков
+    # Регистрация всех обработчиков (роутеров)
     register_main_menu_handlers(dp)
     register_styles_handlers(dp)
     register_constructions_handlers(dp)
     register_materials_handlers(dp)
+    register_calculators_handlers(dp)
+    register_colors_handlers(dp)
     
     dp.message.register(cmd_start, lambda m: True)
     dp.callback_query.register(process_language, lambda c: c.data.startswith("lang_"))
@@ -66,14 +69,14 @@ async def main():
     runner = web.AppRunner(app)
     await runner.setup()
 
-    port = int(os.environ.get("PORT", 10000))   # Render часто использует 10000
+    port = int(os.environ.get("PORT", 10000))
     site = web.TCPSite(runner, '0.0.0.0', port)
     await site.start()
 
     logging.info(f"🚀 Сервер запущен на порту {port}")
     logging.info("Бот работает через Webhook")
 
-    await asyncio.Event().wait()  # держим процесс живым
+    await asyncio.Event().wait()
 
 
 if __name__ == "__main__":
