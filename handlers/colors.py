@@ -15,7 +15,7 @@ from texts.colors_texts import (
 router = Router()
 
 # 1. Главное меню раздела (Выбор: Цвета или Колористика)
-@router.callback_query(F.data == "menu_colors_coloristics")
+@router.callback_query(F.data == "menu_colors")
 async def process_colors_main_menu(callback: types.CallbackQuery):
     await callback.answer()
     lang = user_language.get(callback.from_user.id, "ru")
