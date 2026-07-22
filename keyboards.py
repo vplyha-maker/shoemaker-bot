@@ -50,11 +50,11 @@ def get_styles_constructions_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
 
     if lang == "ru":
         builder.row(InlineKeyboardButton(text="👞 Фасоны и Силуэты", callback_data="sub_styles"))
-        builder.row(InlineKeyboardButton(text="⚙️ Конструкции сборки (В разработке)", callback_data="sub_constructions"))
+        builder.row(InlineKeyboardButton(text="⚙️ Конструкции и Методы крепления", callback_data="sub_constructions"))
         builder.row(InlineKeyboardButton(text="⬅️ Главное меню", callback_data="back_to_main"))
     else:  # uk
         builder.row(InlineKeyboardButton(text="👞 Фасони та Силуети", callback_data="sub_styles"))
-        builder.row(InlineKeyboardButton(text="⚙️ Конструкції збирання (В розробці)", callback_data="sub_constructions"))
+        builder.row(InlineKeyboardButton(text="⚙️ Конструкції та Методи кріплення", callback_data="sub_constructions"))
         builder.row(InlineKeyboardButton(text="⬅️ Головне меню", callback_data="back_to_main"))
 
     return builder.as_markup()
@@ -81,10 +81,38 @@ def get_styles_menu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
 
 
 def get_back_to_styles_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
-    """Кнопка возврата из карточки товара в меню фасонов"""
+    """Кнопка возврата из карточки фасона в меню фасонов"""
     builder = InlineKeyboardBuilder()
     back_text = "⬅️ Назад к фасонам" if lang == "ru" else "⬅️ Назад до фасонів"
     builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_styles"))
     return builder.as_markup()
 
 
+# 👇 НОВЫЕ КЛАВИАТУРЫ ДЛЯ РАЗДЕЛА КОНСТРУКЦИЙ:
+
+def get_constructions_menu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    """Клавиатура с 4 категориями конструкций"""
+    builder = InlineKeyboardBuilder()
+
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="🪡 Методы крепления подошвы", callback_data="const_cat_fastening"))
+        builder.row(InlineKeyboardButton(text="🦴 Внутренний силовой каркас", callback_data="const_cat_frame"))
+        builder.row(InlineKeyboardButton(text="👟 Конструкции верха (Крой)", callback_data="const_cat_upper"))
+        builder.row(InlineKeyboardButton(text="💧 Гидроизоляция и мембраны", callback_data="const_cat_water"))
+        builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="menu_styles"))
+    else:  # uk
+        builder.row(InlineKeyboardButton(text="🪡 Методи кріплення підошви", callback_data="const_cat_fastening"))
+        builder.row(InlineKeyboardButton(text="🦴 Внутрішній силовий каркас", callback_data="const_cat_frame"))
+        builder.row(InlineKeyboardButton(text="👟 Конструкції верху (Крій)", callback_data="const_cat_upper"))
+        builder.row(InlineKeyboardButton(text="💧 Гідроізоляція та мембрани", callback_data="const_cat_water"))
+        builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="menu_styles"))
+
+    return builder.as_markup()
+
+
+def get_back_to_constructions_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    """Кнопка возврата из карточки конструкции в меню конструкций"""
+    builder = InlineKeyboardBuilder()
+    back_text = "⬅️ Назад к конструкциям" if lang == "ru" else "⬅️ Назад до конструкцій"
+    builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_constructions"))
+    return builder.as_markup()
