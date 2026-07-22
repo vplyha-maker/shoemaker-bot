@@ -8,6 +8,7 @@ from aiogram import Bot, Dispatcher
 from config import BOT_TOKEN
 from handlers.base import cmd_start, process_language
 from handlers.main_menu import register_main_menu_handlers
+from handlers.styles import register_styles_handlers
 
 from utils.keepalive import handle_ping, self_ping
 
@@ -28,7 +29,8 @@ async def main():
     dp.callback_query.register(process_language, lambda c: c.data.startswith("lang_"))
     
     # Регистрация главного меню
-    register_main_menu_handlers(dp)
+    register_main_menu_handlers(dp) 
+    register_styles_handlers(dp)
 
     logging.info("Бот успешно запущен!")
 
