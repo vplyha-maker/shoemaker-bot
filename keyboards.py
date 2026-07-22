@@ -212,3 +212,23 @@ def get_back_to_colors_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
     text = "◀️ К списку тем (Цвета)" if lang == "ru" else "◀️ До списку тем (Кольори)"
     builder.row(InlineKeyboardButton(text=text, callback_data="sub_menu_colors"))
     return builder.as_markup()
+
+# глосарий
+def get_glossary_main_menu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="🧱 Материалы и детали", callback_data="glossary_materials"))
+        builder.row(InlineKeyboardButton(text="🛠 Процессы и технологии", callback_data="glossary_processes"))
+        builder.row(InlineKeyboardButton(text="◀️ Главное меню", callback_data="back_to_main"))
+    else:
+        builder.row(InlineKeyboardButton(text="🧱 Матеріали та деталі", callback_data="glossary_materials"))
+        builder.row(InlineKeyboardButton(text="🛠 Процеси та технології", callback_data="glossary_processes"))
+        builder.row(InlineKeyboardButton(text="◀️ Головне меню", callback_data="back_to_main"))
+    return builder.as_markup()
+
+def get_back_to_glossary_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    text = "◀️ Назад к глоссарию" if lang == "ru" else "◀️ Назад до глосарію"
+    builder.row(InlineKeyboardButton(text=text, callback_data="menu_glossary"))
+    return builder.as_markup()
+
