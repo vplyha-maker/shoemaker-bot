@@ -14,6 +14,7 @@ from handlers.constructions import register_constructions_handlers
 from handlers.materials import register_materials_handlers
 from handlers.colors import register_colors_handlers
 from handlers.glossary import register_glossary_handlers
+from handlers.assistant import register_assistant_handlers
 
 
 
@@ -53,6 +54,7 @@ async def main():
     register_materials_handlers(dp)
     register_colors_handlers(dp)
     register_glossary_handlers(dp)
+    register_assistant_handlers(dp)
     
     
     dp.message.register(cmd_start, lambda m: True)
