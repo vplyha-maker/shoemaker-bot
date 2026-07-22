@@ -295,7 +295,8 @@ def get_assistant_check_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
 def get_back_to_assistant_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     text = "◀️ К экспресс-помощнику" if lang == "ru" else "◀️ До експрес-помічника"
-    builder.row(InlineKeyboardButton(text=text, callback_data="callback_data="menu_helper"
+    builder.row(InlineKeyboardButton(text=text, callback_data="menu_helper"))
+    
 
     return builder.as_markup()
 
