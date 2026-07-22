@@ -2,7 +2,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-
 def get_language_keyboard():
     """Клавиатура выбора языка"""
     builder = InlineKeyboardBuilder()
@@ -43,8 +42,6 @@ def get_main_menu(lang: str = "ru"):
         builder.row(InlineKeyboardButton(text="👥 Спільнота майстрів", callback_data="menu_community"))
 
     return builder.as_markup()
-    from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
 def get_styles_constructions_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
@@ -89,4 +86,5 @@ def get_back_to_styles_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
     back_text = "⬅️ Назад к фасонам" if lang == "ru" else "⬅️ Назад до фасонів"
     builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_styles"))
     return builder.as_markup()
+
 
