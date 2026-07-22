@@ -196,13 +196,15 @@ def get_colors_submenu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
         builder.row(InlineKeyboardButton(text="💎 Как создать \"дорогой\" оттенок", callback_data="color_expensive"))
         builder.row(InlineKeyboardButton(text="🧪 Формулы смешивания пигментов", callback_data="color_mixing"))
         builder.row(InlineKeyboardButton(text="🔄 Таблица получения редких тонов", callback_data="color_rare_tones"))
-        builder.row(InlineKeyboardButton(text="◀️ Назад к разделам", callback_data="menu_colors_coloristics"))
+        # 👇 ЗДЕСЬ ИСПРАВЛЕНО (для русского):
+        builder.row(InlineKeyboardButton(text="◀️ Назад к разделам", callback_data="menu_colors"))
     else:
         builder.row(InlineKeyboardButton(text="🧠 Психологія кольору у взутті", callback_data="color_psychology"))
         builder.row(InlineKeyboardButton(text="💎 Як створити \"дорогий\" відтінок", callback_data="color_expensive"))
         builder.row(InlineKeyboardButton(text="🧪 Формули змішування пігментів", callback_data="color_mixing"))
         builder.row(InlineKeyboardButton(text="🔄 Таблиця отримання рідкісних тонів", callback_data="color_rare_tones"))
-        builder.row(InlineKeyboardButton(text="◀️ Назад до розділів", callback_data="menu_colors_coloristics"))
+        # 👇 ЗДЕСЬ ИСПРАВЛЕНО (для украинского):
+        builder.row(InlineKeyboardButton(text="◀️ Назад до розділів", callback_data="menu_colors"))
     return builder.as_markup()
 
 def get_back_to_colors_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
@@ -210,5 +212,3 @@ def get_back_to_colors_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
     text = "◀️ К списку тем (Цвета)" if lang == "ru" else "◀️ До списку тем (Кольори)"
     builder.row(InlineKeyboardButton(text=text, callback_data="sub_menu_colors"))
     return builder.as_markup()
-
-
