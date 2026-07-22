@@ -22,7 +22,7 @@ from texts.assistant_texts import (
 router = Router()
 
 # Главное меню экспресс-помощника
-@router.callback_query(F.data == "menu_assistant")
+@router.callback_query(F.data == "menu_helper")
 async def process_assistant_menu(callback: types.CallbackQuery):
     await callback.answer()
     lang = user_language.get(callback.from_user.id, "ru")
