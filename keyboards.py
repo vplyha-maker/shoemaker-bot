@@ -231,4 +231,67 @@ def get_back_to_glossary_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
     text = "◀️ Назад к глоссарию" if lang == "ru" else "◀️ Назад до глосарію"
     builder.row(InlineKeyboardButton(text=text, callback_data="menu_glossary"))
     return builder.as_markup()
+    
+    # Экспресс помошник
+def get_assistant_main_menu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="🧪 Подборщик склейки", callback_data="asst_glue_start"))
+        builder.row(InlineKeyboardButton(text="🚨 Исправление брака", callback_data="asst_trouble_menu"))
+        builder.row(InlineKeyboardButton(text="📋 Чек-листы операций", callback_data="asst_check_menu"))
+        builder.row(InlineKeyboardButton(text="◀️ Главное меню", callback_data="back_to_main"))
+    else:
+        builder.row(InlineKeyboardButton(text="🧪 Підбір склеювання", callback_data="asst_glue_start"))
+        builder.row(InlineKeyboardButton(text="🚨 Виправлення браку", callback_data="asst_trouble_menu"))
+        builder.row(InlineKeyboardButton(text="📋 Чек-листи операцій", callback_data="asst_check_menu"))
+        builder.row(InlineKeyboardButton(text="◀️ Головне меню", callback_data="back_to_main"))
+    return builder.as_markup()
+
+def get_assistant_glue_soles_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="🥾 ТЭП (Термоэластопласт)", callback_data="glue_res_leather_tep"))
+        builder.row(InlineKeyboardButton(text="🛞 ПУ (Полиуретан)", callback_data="glue_res_leather_pu"))
+        builder.row(InlineKeyboardButton(text="👟 Резина / Нитрил", callback_data="glue_res_suede_rubber"))
+        builder.row(InlineKeyboardButton(text="◀️ Назад к помощнику", callback_data="menu_assistant"))
+    else:
+        builder.row(InlineKeyboardButton(text="🥾 ТЕП", callback_data="glue_res_leather_tep"))
+        builder.row(InlineKeyboardButton(text="🛞 ПУ (Поліуретан)", callback_data="glue_res_leather_pu"))
+        builder.row(InlineKeyboardButton(text="👟 Гума / Нітрил", callback_data="glue_res_suede_rubber"))
+        builder.row(InlineKeyboardButton(text="◀️ Назад до помічника", callback_data="menu_assistant"))
+    return builder.as_markup()
+
+def get_assistant_trouble_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="❌ Клей не держит / Отклеивается", callback_data="err_glue"))
+        builder.row(InlineKeyboardButton(text="🔥 Кожа сжалась от фена", callback_data="err_heat"))
+        builder.row(InlineKeyboardButton(text="⚪ Белый налет при покраске", callback_data="err_white"))
+        builder.row(InlineKeyboardButton(text="◀️ Назад к помощнику", callback_data="menu_assistant"))
+    else:
+        builder.row(InlineKeyboardButton(text="❌ Клей не тримає", callback_data="err_glue"))
+        builder.row(InlineKeyboardButton(text="🔥 Шкіра стиснулася від фена", callback_data="err_heat"))
+        builder.row(InlineKeyboardButton(text="⚪ Білий наліт при фарбуванні", callback_data="err_white"))
+        builder.row(InlineKeyboardButton(text="◀️ Назад до помічника", callback_data="menu_assistant"))
+    return builder.as_markup()
+
+def get_assistant_check_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="📋 Перед затяжкой на колодку", callback_data="check_last"))
+        builder.row(InlineKeyboardButton(text="📋 Перед финишной покраской", callback_data="check_paint"))
+        builder.row(InlineKeyboardButton(text="◀️ Назад к помощнику", callback_data="menu_assistant"))
+    else:
+        builder.row(InlineKeyboardButton(text="📋 Перед затяжкою на колодку", callback_data="check_last"))
+        builder.row(InlineKeyboardButton(text="📋 Перед фінішним фарбуванням", callback_data="check_paint"))
+        builder.row(InlineKeyboardButton(text="◀️ Назад до помічника", callback_data="menu_assistant"))
+    return builder.as_markup()
+
+def get_back_to_assistant_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    text = "◀️ К экспресс-помощнику" if lang == "ru" else "◀️ До експрес-помічника"
+    builder.row(InlineKeyboardButton(text=text, callback_data="menu_assistant"))
+    return builder.as_markup()
+
+
 
