@@ -153,3 +153,26 @@ def get_back_to_materials_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
     builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_materials"))
     return builder.as_markup()
 
+def get_chemistry_menu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="🍯 Клеи и отвердители", callback_data="chem_cat_adhesives"))
+        builder.row(InlineKeyboardButton(text="🧪 Очистители и праймеры", callback_data="chem_cat_primers"))
+        builder.row(InlineKeyboardButton(text="✨ Аппретуры и воски", callback_data="chem_cat_finishes"))
+        builder.row(InlineKeyboardButton(text="🛡️ Защита и спецхимия", callback_data="chem_cat_protection"))
+        builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="menu_chemistry"))
+    else:
+        builder.row(InlineKeyboardButton(text="🍯 Клеї та затверджувачі", callback_data="chem_cat_adhesives"))
+        builder.row(InlineKeyboardButton(text="🧪 Очисники та праймери", callback_data="chem_cat_primers"))
+        builder.row(InlineKeyboardButton(text="✨ Апретури та воски", callback_data="chem_cat_finishes"))
+        builder.row(InlineKeyboardButton(text="🛡️ Захист та спецхімія", callback_data="chem_cat_protection"))
+        builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="menu_chemistry"))
+    return builder.as_markup()
+
+def get_back_to_chemistry_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    back_text = "⬅️ Назад к химии" if lang == "ru" else "⬅️ Назад до хімії"
+    builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_chemistry"))
+    return builder.as_markup()
+
+
