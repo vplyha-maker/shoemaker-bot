@@ -74,7 +74,7 @@ async def process_trouble_menu(callback: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
-# Тексты исправления брака (возврат назад в меню брака)
+# Шаг 2: Тексты исправления брака (возврат назад в меню брака)
 @router.callback_query(F.data.in_(["err_glue", "err_heat", "err_white"]))
 async def process_trouble_text(callback: types.CallbackQuery):
     await callback.answer()
@@ -101,7 +101,7 @@ async def process_check_menu(callback: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
-# Тексты чек-листов (возврат назад в меню чек-листов)
+# Шаг 2: Тексты чек-листов (возврат назад в меню чек-листов)
 @router.callback_query(F.data.in_(["check_last", "check_paint"]))
 async def process_check_text(callback: types.CallbackQuery):
     await callback.answer()
