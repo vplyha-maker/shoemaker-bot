@@ -12,7 +12,7 @@ router = Router()
     (F.data != "menu_chemistry") &
     (F.data != "menu_colors") &
      (F.data != "menu_glossary") &
-     (F.data != "menu_assistant")               
+     (F.data != "menu_helper")                
 )
 async def process_main_menu(callback: types.CallbackQuery):
     """Обработка нажатий на главное меню для разделов-заглушек"""
