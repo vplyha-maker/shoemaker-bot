@@ -116,3 +116,40 @@ def get_back_to_constructions_keyboard(lang: str = "ru") -> InlineKeyboardMarkup
     back_text = "⬅️ Назад к конструкциям" if lang == "ru" else "⬅️ Назад до конструкцій"
     builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_constructions"))
     return builder.as_markup()
+    
+#  Кнопки Материалы и химия
+
+def get_materials_chemistry_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="🪵 Материалы", callback_data="sub_materials"),
+                    InlineKeyboardButton(text="🧪 Химия", callback_data="sub_chemistry"))
+        builder.row(InlineKeyboardButton(text="⬅️ Главное меню", callback_data="back_to_main"))
+    else:
+        builder.row(InlineKeyboardButton(text="🪵 Матеріали", callback_data="sub_materials"),
+                    InlineKeyboardButton(text="🧪 Хімія", callback_data="sub_chemistry"))
+        builder.row(InlineKeyboardButton(text="⬅️ Головне меню", callback_data="back_to_main"))
+    return builder.as_markup()
+
+def get_materials_menu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="🐄 Натуральная кожа и замша", callback_data="mat_cat_leather"))
+        builder.row(InlineKeyboardButton(text="🧪 Полимеры и материалы подошв", callback_data="mat_cat_soles"))
+        builder.row(InlineKeyboardButton(text="🕸️ Подкладка и дублирование", callback_data="mat_cat_lining"))
+        builder.row(InlineKeyboardButton(text="🐍 Экзотика и технологичные материалы", callback_data="mat_cat_exotic"))
+        builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="menu_chemistry"))
+    else:
+        builder.row(InlineKeyboardButton(text="🐄 Натуральна шкіра та замша", callback_data="mat_cat_leather"))
+        builder.row(InlineKeyboardButton(text="🧪 Полімери та матеріали підошов", callback_data="mat_cat_soles"))
+        builder.row(InlineKeyboardButton(text="🕸️ Підкладка та дублювання", callback_data="mat_cat_lining"))
+        builder.row(InlineKeyboardButton(text="🐍 Екзотика та технологічні матеріали", callback_data="mat_cat_exotic"))
+        builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="menu_chemistry"))
+    return builder.as_markup()
+
+def get_back_to_materials_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    back_text = "⬅️ Назад к материалам" if lang == "ru" else "⬅️ Назад до матеріалів"
+    builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_materials"))
+    return builder.as_markup()
+
