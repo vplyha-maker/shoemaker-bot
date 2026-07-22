@@ -39,21 +39,25 @@ async def main():
     logging.info("Бот успешно запущен!")
 
     # === Keep-Alive веб-сервер ===
-    app = web.Application()
-    app.router.add_get('/', handle_ping)
-    
-    runner = web.AppRunner(app)
-    await runner.setup()
-    
-    port = int(os.environ.get("PORT", 8080))
-    site = web.TCPSite(runner, '0.0.0.0', port)
-    await site.start()
-    
-    logging.info(f"Keep-alive сервер запущен на порту {port}")
+    # После всех register_...
+logging.info("Бот успешно запущен!")
 
-    asyncio.create_task(self_ping())
+# Keep-alive
+app = web.Application()
+app.router.add_get('/', handle_ping)
 
-    await dp.start_polling(bot)
+runner = web.AppRunner(app)
+await runner.setup()
+
+port = int(os.environ.get("PORT", 8080))
+site = web.TCPSite(runner, '0.0.0.0', port)
+await site.start()
+
+logging.info(f"Keep-alive сервер запущен на порту {port}")
+
+asyncio.create_task(self_ping())
+
+await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
