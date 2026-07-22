@@ -12,7 +12,7 @@ from handlers.main_menu import register_main_menu_handlers
 from handlers.styles import register_styles_handlers
 from handlers.constructions import register_constructions_handlers
 from handlers.materials import register_materials_handlers
-from handlers.colors import register_colors_handlers
+
 
 from utils.keepalive import handle_ping, self_ping
 
@@ -47,7 +47,7 @@ async def main():
     register_styles_handlers(dp)
     register_constructions_handlers(dp)
     register_materials_handlers(dp)
-    register_colors_handlers(dp)
+    
     
     dp.message.register(cmd_start, lambda m: True)
     dp.callback_query.register(process_language, lambda c: c.data.startswith("lang_"))
