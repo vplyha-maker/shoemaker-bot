@@ -10,6 +10,8 @@ from handlers.base import cmd_start, process_language
 from handlers.main_menu import register_main_menu_handlers
 from handlers.styles import register_styles_handlers
 from handlers.constructions import register_constructions_handlers
+from handlers.materials import register_materials_handlers
+
 from utils.keepalive import handle_ping, self_ping
 
 
@@ -32,6 +34,8 @@ async def main():
     register_main_menu_handlers(dp) 
     register_styles_handlers(dp)
     register_constructions_handlers(dp)
+    register_materials_handlers(dp)
+
     logging.info("Бот успешно запущен!")
 
     # === Keep-Alive веб-сервер ===
