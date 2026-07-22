@@ -9,8 +9,8 @@ router = Router()
 @router.callback_query(
     F.data.startswith("menu_") & 
     (F.data != "menu_styles") & 
-    (F.data != "menu_chemistry")
-    (F.data != "menu_colors_coloristics")
+    (F.data != "menu_chemistry") &
+    (F.data != "menu_colors_coloristics") &
     
 )
 async def process_main_menu(callback: types.CallbackQuery):
