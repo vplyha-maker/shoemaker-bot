@@ -1,56 +1,56 @@
-# 👞 Shoemaker Bot — Telegram-бот для майстрів взуття
+# 👞 Shoemaker Bot — Telegram-бот для мастеров обуви
 
-Інтерактивний Telegram-бот, який надає професійну довідкову інформацію про конструкції, матеріали, технології та інструменти для виробництва взуття. Бот підтримує **російську** та **українську** мови.
+Интерактивный Telegram-бот, который предоставляет профессиональную справочную информацию о конструкциях, материалах, технологиях и инструментах для производства обуви. Бот поддерживает **русский** и **украинский** языки.
 
-## 🎯 Можливості
+## 🎯 Возможности
 
-- 📐 **Розміри, мірки та ортопедія**
-- 👞 **Фасони і конструкції взуття**
-- 🧪 **Матеріали і хімічні реагенти**
-- 🎨 **Кольори і колористика**
-- 🧮 **Калькулятори і конвертери**
-- 🧼 **Реставрація та догляд**
-- 🛠️ **Інструменти і техніка безпеки**
-- 🧩 **Експрес-помічник** (підбір склейки, чек-листи)
-- 📖 **Глосарій професійних термінів**
-- 👥 **Спільнота майстрів**
+- 📐 **Размеры, мерки и ортопедия**
+- 👞 **Фасоны и конструкции обуви**
+- 🧪 **Материалы и химические реагенты**
+- 🎨 **Цвета и колористика**
+- 🧮 **Калькуляторы и конвертеры**
+- 🧼 **Реставрация и уход**
+- 🛠️ **Инструменты и техника безопасности**
+- 🧩 **Экспресс-помощник** (подбор склейки, чек-листы)
+- 📖 **Глоссарий профессиональных терминов**
+- 👥 **Сообщество мастеров**
 
 ---
 
-## 🚀 Швидкий старт
+## 🚀 Быстрый старт
 
-### Передумови
+### Требования
 
 - Python 3.10+
 - Git
-- Telegram аккаунт
-- Telegram Bot Token (від [@BotFather](https://t.me/botfather))
+- Аккаунт Telegram
+- Telegram Bot Token (от [@BotFather](https://t.me/botfather))
 
 ### Установка
 
-1. **Клонуй репозиторій**
+1. **Клонируй репозиторий**
 ```bash
 git clone https://github.com/vplyha-maker/shoemaker-bot.git
 cd shoemaker-bot
 ```
 
-2. **Створи віртуальне оточення**
+2. **Создай виртуальное окружение**
 ```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# або
+# или
 venv\Scripts\activate  # Windows
 ```
 
-3. **Встанови залежності**
+3. **Установи зависимости**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Створи файл `.env` в корені проекту**
+4. **Создай файл `.env` в корне проекта**
 ```env
-BOT_TOKEN=твій_токен_від_botfather
-WEBHOOK_URL=https://твій-домен.com  # Опціонально (для Render використовується автоматично)
+BOT_TOKEN=твой_токен_от_botfather
+WEBHOOK_URL=https://твой-домен.com  # Опционально (для Render устанавливается автоматически)
 ```
 
 5. **Запусти бота**
@@ -60,199 +60,200 @@ python main.py
 
 ---
 
-## 📦 Залежності
+## 📦 Зависимости
 
 ```
 aiogram==3.13.0          # Telegram Bot Framework
-aiohttp==3.10.0          # Асинхронний HTTP клієнт
-python-dotenv==1.0.1     # Управління змінними окружения
-pydantic==2.8.2          # Валідація даних
+aiohttp==3.10.0          # Асинхронный HTTP клиент
+python-dotenv==1.0.1     # Управление переменными окружения
+pydantic==2.8.2          # Валидация данных
 ```
 
 ---
 
-## 🏗️ Архітектура проекту
+## 🏗️ Архитектура проекта
 
 ```
 shoemaker-bot/
-├── main.py                      # Точка входу, ініціалізація Webhook
-├── config.py                    # Конфігурація (BOT_TOKEN)
-├── keyboards.py                 # Клавіатури для Telegram (~295 рядків)
-├── requirements.txt             # Залежності Python
-├── .env                         # Змінні окружения (НЕ комітувати!)
+├── main.py                      # Точка входа, инициализация Webhook
+├── config.py                    # Конфигурация (BOT_TOKEN)
+├── keyboards.py                 # Клавиатуры для Telegram (~295 строк)
+├── requirements.txt             # Зависимости Python
+├── .env                         # Переменные окружения (НЕ коммитить!)
 │
-├── handlers/                    # Обробники команд і callback'ів
+├── handlers/                    # Обработчики команд и callback'ов
 │   ├── __init__.py
-│   ├── base.py                  # /start команда, вибір мови
-│   ├── main_menu.py             # Головне меню
-│   ├── styles.py                # Фасони і силуети (3.3 KB)
-│   ├── materials.py             # Матеріали і полімери (3.4 KB)
-│   ├── colors.py                # Кольори і колористика (3.6 KB)
-│   ├── constructions.py         # Конструкції взуття (1.7 KB)
-│   ├── glossary.py              # Глосарій термінів (1.9 KB)
-│   └── assistant.py             # Експрес-помічник (4.7 KB)
+│   ├── base.py                  # /start команда, выбор языка
+│   ├── main_menu.py             # Главное меню
+│   ├── styles.py                # Фасоны и силуэты (3.3 KB)
+│   ├── materials.py             # Материалы и полимеры (3.4 KB)
+│   ├── colors.py                # Цвета и колористика (3.6 KB)
+│   ├── constructions.py         # Конструкции обуви (1.7 KB)
+│   ├── glossary.py              # Глоссарий терминов (1.9 KB)
+│   └── assistant.py             # Экспресс-помощник (4.7 KB)
 │
-├── texts/                       # База знань (текстовий контент)
+├── texts/                       # База знаний (текстовый контент)
 │   ├── __init__.py
-│   ├── styles_texts.py          # Вся інформація про фасони (14.1 KB)
-│   ├── materials_texts.py       # Матеріали взуття (16.8 KB)
-│   ├── chemistry_texts.py       # Хімічні реагенти (19.3 KB)
+│   ├── styles_texts.py          # Вся информация о фасонах (14.1 KB)
+│   ├── materials_texts.py       # Материалы обуви (16.8 KB)
+│   ├── chemistry_texts.py       # Химические реагенты (19.3 KB)
 │   ├── colors_texts.py          # Колористика (11 KB)
-│   ├── constructions_texts.py   # Методи конструювання (8.4 KB)
-│   ├── glossary_texts.py        # Термінологія (10 KB)
-│   └── assistant_texts.py       # Контент помічника (15.2 KB)
+│   ├── constructions_texts.py   # Методы конструирования (8.4 KB)
+│   ├── glossary_texts.py        # Терминология (10 KB)
+│   └── assistant_texts.py       # Контент помощника (15.2 KB)
 │
-├── utils/                       # Утилітарні функції
+├── utils/                       # Утилитарные функции
 │   ├── __init__.py
-│   └── keepalive.py             # Keep-alive механізм для Render
+│   └── keepalive.py             # Keep-alive механизм для Render
 │
 └── LICENSE                      # MIT License
 ```
 
 ---
 
-## 📝 Структура коду
+## 📝 Структура кода
 
-### **main.py** — Основний файл
+### **main.py** — Основной файл
 ```python
-# Ініціалізація бота і диспетчера
+# Инициализация бота и диспетчера
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
-# Webhook конфігурація
+# Webhook конфигурация
 WEBHOOK_URL = "https://shoemaker-bot.onrender.com"
 
-# Реєстрація обробників
+# Регистрация обработчиков
 register_main_menu_handlers(dp)
 register_styles_handlers(dp)
-# ... і т.д.
+# ... и т.д.
 
 # Запуск веб-сервера на порту 10000
 ```
 
-### **keyboards.py** — Клавіатури
-Містить функції для створення інтерактивних кнопок:
+### **keyboards.py** — Клавиатуры
+Содержит функции для создания интерактивных кнопок:
 ```python
-get_language_keyboard()              # Вибір мови РУ/УК
-get_main_menu(lang="ru")            # Головне меню (12+ кнопок)
-get_styles_constructions_keyboard() # Підменю фасонів
-get_materials_chemistry_keyboard()  # Матеріали & Хімія
-# ... і багато інших
+get_language_keyboard()              # Выбор языка РУ/УК
+get_main_menu(lang="ru")            # Главное меню (12+ кнопок)
+get_styles_constructions_keyboard() # Подменю фасонов
+get_materials_chemistry_keyboard()  # Материалы & Химия
+# ... и многие другие
 ```
 
-### **handlers/** — Обробники
-Кожен handler реєструє callback-функції для обробки натискань на кнопки:
+### **handlers/** — Обработчики
+Каждый handler регистрирует callback-функции для обработки нажатий на кнопки:
 ```python
 def register_main_menu_handlers(dp):
     dp.callback_query.register(menu_callback_handler, ...)
 
 @router.callback_query(F.data.startswith("style_cat_"))
 async def style_category_handler(query: CallbackQuery, state: FSMContext):
-    # Обробка натиску на кнопку
+    # Обработка нажатия на кнопку
 ```
 
-### **texts/** — База знань
-Словники з інформацією для кожного розділу:
+### **texts/** — База знаний
+Словари с информацией для каждого раздела:
 ```python
 STYLES_TEXTS = {
     "classic_oxford": {
-        "ru": "Оксфорд — класичний чоловічий напівчеревик...",
+        "ru": "Оксфорд — классический полуботинок...",
         "uk": "Оксфорд — класичний напівчеревик..."
     },
-    # ... більше записів
+    # ... больше записей
 }
 ```
 
 ---
 
-## 🌐 Розгортання
+## 🌐 Развертывание
 
-### На Render.com (Рекомендується)
+### На Render.com (Рекомендуется)
 
-1. **Виштовхни код на GitHub**
+1. **Отправь код на GitHub**
 ```bash
 git add .
 git commit -m "Initial commit"
 git push origin main
 ```
 
-2. **Створи новий Service на [render.com](https://render.com)**
-   - Обери Git репозиторій
+2. **Создай новый Service на [render.com](https://render.com)**
+   - Выбери Git репозиторий
    - Runtime: Python 3.10
    - Build Command: `pip install -r requirements.txt`
    - Start Command: `python main.py`
    - Port: 10000
 
-3. **Встав змінні окружения**
-   - `BOT_TOKEN` — твій токен від @BotFather
-   - `WEBHOOK_URL` — автоматично встановлюється Render URL
+3. **Установи переменные окружения**
+   - `BOT_TOKEN` — твой токен от @BotFather
+   - `WEBHOOK_URL` — автоматически устанавливается URL Render
 
 4. **Deploy!** 🚀
 
-### Локально (Для розробки)
+### Локально (Для разработки)
 
 ```bash
-# Встанови змінні окружения
-export BOT_TOKEN="твій_токен"
+# Установи переменные окружения
+export BOT_TOKEN="твой_токен"
 
 # Запусти
 python main.py
 ```
 
-**Примітка:** Локальний запуск не буде мати webhook, використовуй polling замість цього.
+**Примечание:** Локальный запуск не будет иметь webhook, используй polling вместо этого.
 
 ---
 
-## 🔐 Безпека
+## 🔐 Безопасность
 
-⚠️ **ВАЖЛИВО:**
-- **НІКОЛИ** не комітуй `.env` файл з токеном!
-- Додай `.env` в `.gitignore`
-- Кожен розробник повинен мати свій BOT_TOKEN
+⚠️ **ВАЖНО:**
+- **НИКОГДА** не коммитий файл `.env` с токеном!
+- Добавь `.env` в `.gitignore`
+- Каждый разработчик должен иметь свой BOT_TOKEN
 
 ```gitignore
 .env
 venv/
 __pycache__/
 *.pyc
+.DS_Store
 ```
 
 ---
 
-## 📚 API Документація
+## 📚 API Документация
 
-### Команди бота
+### Команды бота
 
 | Команда | Описание |
 |---------|---------|
-| `/start` | Почати роботу, вибір мови |
-| Кнопки меню | Навігація по розділам |
+| `/start` | Начать работу, выбор языка |
+| Кнопки меню | Навигация по разделам |
 
 ### Структура callback_data
 
-Бот використовує `callback_data` для навігації:
-- `lang_ru` / `lang_uk` — вибір мови
-- `menu_*` — головне меню розділи
-- `sub_*` — підменю
-- `back_to_main` — повернення в головне меню
+Бот использует `callback_data` для навигации:
+- `lang_ru` / `lang_uk` — выбор языка
+- `menu_*` — разделы главного меню
+- `sub_*` — подменю
+- `back_to_main` — возврат в главное меню
 
 ---
 
-## 🧪 Розробка
+## 🧪 Разработка
 
-### Додавання нового розділу
+### Добавление нового раздела
 
-1. **Створи файл з текстами** `texts/new_section_texts.py`
+1. **Создай файл с текстами** `texts/new_section_texts.py`
 ```python
 NEW_SECTION_TEXTS = {
     "item_1": {
-        "ru": "Російський текст",
-        "uk": "Український текст"
+        "ru": "Русский текст",
+        "uk": "Украинский текст"
     }
 }
 ```
 
-2. **Створи handler** `handlers/new_section.py`
+2. **Создай обработчик** `handlers/new_section.py`
 ```python
 from aiogram import Router, F
 from aiogram.types import CallbackQuery
@@ -261,10 +262,10 @@ router = Router()
 
 @router.callback_query(F.data == "menu_new_section")
 async def new_section_handler(query: CallbackQuery):
-    await query.message.edit_text("...")
+    await query.message.edit_text("Здесь твое сообщение...")
 ```
 
-3. **Зареєструй в main.py**
+3. **Зарегистрируй в main.py**
 ```python
 from handlers.new_section import register_new_section_handlers
 
@@ -273,11 +274,11 @@ register_new_section_handlers(dp)
 
 ---
 
-## 🐛 Відладка
+## 🐛 Отладка
 
-### Логування
+### Логирование
 
-Бот виводить логи в консоль:
+Бот выводит логи в консоль:
 ```
 2024-01-15 10:30:45 - INFO - ✅ Webhook установлен: https://...
 2024-01-15 10:30:46 - INFO - 🚀 Сервер запущен на порту 10000
@@ -285,46 +286,46 @@ register_new_section_handlers(dp)
 
 ### Keep-Alive на Render
 
-Файл `utils/keepalive.py` автоматично робить ping кожні 5 хвилин для запобігання "засинанню" безплатного Render сервіса.
+Файл `utils/keepalive.py` автоматически робит ping каждые 5 минут для предотвращения "засыпания" бесплатного Render сервиса.
 
 ---
 
-## 📊 Статистика коду
+## 📊 Статистика кода
 
-- **Всього рядків:** ~2,500+
-- **Обробників:** 8 основних
-- **Текстового контенту:** ~100 KB
-- **Кнопок клавіатури:** 100+
-- **Підтримуваних мов:** 2 (РУ/УК)
-
----
-
-## 🤝 Внесок
-
-Якщо хочеш добавити новий контент або поліпшити бота:
-
-1. Fork репозиторій
-2. Створи гілку (`git checkout -b feature/amazing-feature`)
-3. Зроби commit (`git commit -m 'Add amazing feature'`)
-4. Push в гілку (`git push origin feature/amazing-feature`)
-5. Відкрий Pull Request
+- **Всего строк:** ~2,500+
+- **Обработчиков:** 8 основных
+- **Текстового контента:** ~100 KB
+- **Кнопок клавиатуры:** 100+
+- **Поддерживаемых языков:** 2 (РУ/УК)
 
 ---
 
-## 📝 Ліцензія
+## 🤝 Контрибьют
 
-Цей проект ліцензіюється під MIT License — див. файл [LICENSE](LICENSE).
+Если хочешь добавить новый контент или улучшить бота:
+
+1. Fork репозиторий
+2. Создай ветку (`git checkout -b feature/amazing-feature`)
+3. Сделай commit (`git commit -m 'Add amazing feature'`)
+4. Push в ветку (`git push origin feature/amazing-feature`)
+5. Откройте Pull Request
 
 ---
 
-## 📞 Контакти
+## 📝 Лицензия
+
+Этот проект лицензирован под MIT License — см. файл [LICENSE](LICENSE).
+
+---
+
+## 📞 Контакты
 
 - GitHub: [@vplyha-maker](https://github.com/vplyha-maker)
 - Telegram Bot: [@shoemaker_bot](https://t.me/your_bot_username)
 
 ---
 
-## 🎓 Корисні ресурси
+## 🎓 Полезные ресурсы
 
 - [Aiogram 3 Documentation](https://docs.aiogram.dev/)
 - [Telegram Bot API](https://core.telegram.org/bots/api)
@@ -333,6 +334,6 @@ register_new_section_handlers(dp)
 
 ---
 
-**Розроблено з ❤️ для майстрів взуття** 👞
+**Разработано с ❤️ для мастеров обуви** 👞
 
-Якщо бот був корисним, не забудь поставити ⭐ на GitHub!
+Если бот был полезен, не забудь поставить ⭐ на GitHub!
