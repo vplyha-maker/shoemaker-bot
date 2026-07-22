@@ -76,7 +76,7 @@ async def process_coloristics_placeholder(callback: types.CallbackQuery):
     from aiogram.types import InlineKeyboardButton
     builder = InlineKeyboardBuilder()
     back_btn_text = "◀️ Назад" if lang == "ru" else "◀️ Назад"
-    builder.row(InlineKeyboardButton(text=back_btn_text, callback_data="menu_colors_coloristics"))
+    builder.row(InlineKeyboardButton(text=back_btn_text, callback_data="menu_colors"))
     
     await callback.message.edit_text(text, reply_markup=builder.as_markup(), parse_mode="Markdown")
 
