@@ -10,7 +10,8 @@ router = Router()
     F.data.startswith("menu_") & 
     (F.data != "menu_styles") & 
     (F.data != "menu_chemistry") &
-    (F.data != "menu_colors")
+    (F.data != "menu_colors") &
+     (F.data != "menu_glossary")
     
 )
 async def process_main_menu(callback: types.CallbackQuery):
