@@ -34,7 +34,7 @@ async def process_assistant_menu(callback: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
-# Клик 1: Старт подборщика склейки -> переходим к выбору подошвы (предполагаем кожу за верхушку)
+# Клик 1: Старт подборщика склейки -> переходим к выбору подошвы
 @router.callback_query(F.data == "asst_glue_start")
 async def process_glue_start(callback: types.CallbackQuery):
     await callback.answer()
@@ -47,7 +47,7 @@ async def process_glue_start(callback: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
-# Результат подбора склейки
+# Результат подбора склейки (возврат назад к выбору подошвы)
 @router.callback_query(F.data.in_(["glue_res_leather_tep", "glue_res_leather_pu", "glue_res_suede_rubber"]))
 async def process_glue_result(callback: types.CallbackQuery):
     await callback.answer()
@@ -57,7 +57,7 @@ async def process_glue_result(callback: types.CallbackQuery):
     text = recipes.get(callback.data.replace("glue_res_", ""), "Рецепт не найден.")
     await callback.message.edit_text(
         text,
-        reply_markup=get_back_to_assistant_keyboard(lang),
+        reply_markup=get_back_to_assistant_keyboard(lang, back_callback="asst_glue_start"),
         parse_mode="Markdown"
     )
 
@@ -74,7 +74,7 @@ async def process_trouble_menu(callback: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
-# Тексты исправления брака
+# Тексты исправления брака (возврат назад в меню брака)
 @router.callback_query(F.data.in_(["err_glue", "err_heat", "err_white"]))
 async def process_trouble_text(callback: types.CallbackQuery):
     await callback.answer()
@@ -84,7 +84,7 @@ async def process_trouble_text(callback: types.CallbackQuery):
     text = texts.get(callback.data, "Информация не найдена.")
     await callback.message.edit_text(
         text,
-        reply_markup=get_back_to_assistant_keyboard(lang),
+        reply_markup=get_back_to_assistant_keyboard(lang, back_callback="asst_trouble_menu"),
         parse_mode="Markdown"
     )
 
@@ -101,7 +101,7 @@ async def process_check_menu(callback: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
-# Тексты чек-листов
+# Тексты чек-листов (возврат назад в меню чек-листов)
 @router.callback_query(F.data.in_(["check_last", "check_paint"]))
 async def process_check_text(callback: types.CallbackQuery):
     await callback.answer()
@@ -111,10 +111,9 @@ async def process_check_text(callback: types.CallbackQuery):
     text = texts.get(callback.data, "Информация не найдена.")
     await callback.message.edit_text(
         text,
-        reply_markup=get_back_to_assistant_keyboard(lang),
+        reply_markup=get_back_to_assistant_keyboard(lang, back_callback="asst_check_menu"),
         parse_mode="Markdown"
     )
 
 def register_assistant_handlers(dp):
     dp.include_router(router)
-
