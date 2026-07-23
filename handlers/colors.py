@@ -90,7 +90,7 @@ async def process_itten_circle(callback: types.CallbackQuery):
     text = ITTEN_CIRCLE_TEXT.get(lang, ITTEN_CIRCLE_TEXT["ru"])
     
     builder = InlineKeyboardBuilder()
-    back_text = "◀️ Назад к цветам" if lang == "ru" else "◀️ Назад до кольорів"
+    back_text = "◀️ Назад к разделам" if lang == "ru" else "◀️ Назад до розділів"
     # Возвращаем в подраздел "Цвета"
     builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_menu_colors"))
     
