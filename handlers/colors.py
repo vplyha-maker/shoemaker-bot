@@ -9,7 +9,8 @@ from keyboards import (
 )
 from texts.colors_texts import (
     COLORS_INTRO_RU, COLORS_INTRO_UK, 
-    COLOR_TEXTS_RU, COLOR_TEXTS_UK
+    COLOR_TEXTS_RU, COLOR_TEXTS_UK,
+    ITTEN_CIRCLE_TEXT_RU, ITTEN_CIRCLE_TEXT_UK
 )
 
 router = Router()
@@ -70,7 +71,47 @@ async def process_coloristics_placeholder(callback: types.CallbackQuery):
         if lang == "ru" else
         "🚧 Розділ «Колористика» знаходиться в розробці.\n\nНезабаром тут з'являться матеріали!"
     )
+    # 👇 ВСТАВЛЯТЬ СЮДА 👇
+
+# 5. Обработчик для Цветового круга Иттена
+@router.callback_query(F.data == "color_itten")
+async def process_itten_circle(callback: types.CallbackQuery):
+    await callback.answer()
+    lang = user_language.get(callback.from_user.id, "ru")
     
+    # Берем текст в зависимости от языка
+    text = ITTEN_CIRCLE_TEXT_RU if lang == "ru" else ITTEN_CIRCLE_TEXT_UK
+    
+    # Пытаемся удалить старое сообщение с меню, чтобы было красиво
+    try:
+        await callback.message.delete()
+    except Exception:
+        pass
+        
+    # Ссылка на картинку
+    ITTEN_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Itten_color_wheel.svg/1024px-Itten_color_wheel.svg.png"
+    
+    # Отправляем фото
+    try:
+        await callback.message.answer_photo(photo=ITTEN_IMAGE_URL)
+    except Exception as e:
+        print(f"Ошибка загрузки фото: {e}")
+        
+    # Создаем кнопку "Назад" к главному меню цветов
+    from aiogram.utils.keyboard import InlineKeyboardBuilder
+    from aiogram.types import InlineKeyboardButton
+    builder = InlineKeyboardBuilder()
+    back_text = "◀️ Назад к цветам" if lang == "ru" else "◀️ Назад до кольорів"
+    builder.row(InlineKeyboardButton(text=back_text, callback_data="menu_colors"))
+    
+    # Отправляем текст с правилами
+    await callback.message.answer(
+        text, 
+        reply_markup=builder.as_markup(), 
+        parse_mode="Markdown"
+    )
+
+# 👆 КОНЕЦ ВСТАВКИ 👆
     # Кнопка возврата в меню выбора (Цвета / Колористика)
     from aiogram.utils.keyboard import InlineKeyboardBuilder
     from aiogram.types import InlineKeyboardButton
