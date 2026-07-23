@@ -91,8 +91,9 @@ async def process_itten_circle(callback: types.CallbackQuery):
     
     builder = InlineKeyboardBuilder()
     back_text = "◀️ Назад к разделам" if lang == "ru" else "◀️ Назад до розділів"
-    # Возвращаем в подраздел "Цвета"
-    builder.row(InlineKeyboardButton(text=back_text, callback_data="sub_menu_colors"))
+    
+    # ИСПРАВЛЕНО: callback_data заменен на "menu_colors"
+    builder.row(InlineKeyboardButton(text=back_text, callback_data="menu_colors"))
     
     try:
         photo = types.FSInputFile("images/itten.jpg") 
@@ -110,6 +111,7 @@ async def process_itten_circle(callback: types.CallbackQuery):
         print(f"Ошибка загрузки фото (отправляем текстом): {e}")
         # Если фото не найдено, просто редактируем текст
         await safe_edit_or_send(callback, text, builder.as_markup())
+
 
 
 def register_colors_handlers(dp):
