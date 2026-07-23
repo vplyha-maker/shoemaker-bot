@@ -35,9 +35,9 @@ async def process_colors_main_menu(callback: types.CallbackQuery):
     lang = user_language.get(callback.from_user.id, "ru")
     
     text = (
-        "🎨 **Раздел «Цвета и Колористика»**\n\nВыберите подраздел:"
+        "🎨 *Раздел* «Цвета и Колористика»**\n\nВыберите подраздел:"
         if lang == "ru" else
-        "🎨 **Розділ «Кольори та Колористика»**\n\nОберіть підрозділ:"
+        "🎨 *Розділ* «Кольори та Колористика»**\n\nОберіть підрозділ:"
     )
     await safe_edit_or_send(callback, text, get_colors_main_menu_keyboard(lang))
 
