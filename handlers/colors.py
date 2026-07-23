@@ -80,7 +80,7 @@ async def process_itten_circle(callback: types.CallbackQuery):
     lang = user_language.get(callback.from_user.id, "ru")
     
     # Берем текст в зависимости от языка
-    text = ITTEN_CIRCLE_TEXT_RU if lang == "ru" else ITTEN_CIRCLE_TEXT_UK
+    text = ITTEN_CIRCLE_TEXT.get(lang, ITTEN_CIRCLE_TEXT["ru"])
     
     # Пытаемся удалить старое сообщение с меню, чтобы было красиво
     try:
