@@ -10,7 +10,7 @@ from keyboards import (
 from texts.colors_texts import (
     COLORS_INTRO_RU, COLORS_INTRO_UK, 
     COLOR_TEXTS_RU, COLOR_TEXTS_UK,
-    ITTEN_CIRCLE_TEXT_RU, ITTEN_CIRCLE_TEXT_UK
+    ITTEN_CIRCLE_TEXT
 )
 
 router = Router()
