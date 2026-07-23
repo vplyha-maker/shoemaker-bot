@@ -84,12 +84,24 @@ async def process_itten_circle(callback: types.CallbackQuery):
     lang = user_language.get(callback.from_user.id, "ru")
     text = ITTEN_CIRCLE_TEXT.get(lang, ITTEN_CIRCLE_TEXT["ru"])
     
-    # Отправляем фото из папки images
+    # Кнопка "Назад"
+    from aiogram.utils.keyboard import InlineKeyboardBuilder
+    builder = InlineKeyboardBuilder()
+    back_text = "◀️ Назад к цветам" if lang == "ru" else "◀️ Назад до кольорів"
+    builder.row(types.InlineKeyboardButton(text=back_text, callback_data="menu_colors"))
+    
+    # Отправляем ФОТО С ПОДПИСЬЮ и кнопкой в одном сообщении!
     try:
         photo = types.FSInputFile("images/itten.jpg") 
-        await callback.message.answer_photo(photo=photo)
+        await callback.message.answer_photo(
+            photo=photo,
+            caption=text,
+            reply_markup=builder.as_markup(),
+            parse_mode="Markdown"
+        )
     except Exception as e:
         print(f"Ошибка загрузки фото: {e}")
+
         
     # Кнопка "Назад"
     from aiogram.utils.keyboard import InlineKeyboardBuilder
