@@ -1,5 +1,3 @@
-# handlers/colors.py
-
 from aiogram import Router, F, types
 from handlers.base import user_language
 from keyboards import (
@@ -51,7 +49,6 @@ async def process_color_topic(callback: types.CallbackQuery):
     await callback.answer()
     lang = user_language.get(callback.from_user.id, "ru")
     
-    # Выбираем нужный словарь в зависимости от языка
     texts_dict = COLOR_TEXTS_RU if lang == "ru" else COLOR_TEXTS_UK
     content_text = texts_dict.get(callback.data, "Информация не найдена.")
     
@@ -61,7 +58,7 @@ async def process_color_topic(callback: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
-# 4. Заглушка для будущей кнопки «Колористика» (чтобы не было ошибки)
+# 4. Заглушка для будущей кнопки «Колористика»
 @router.callback_query(F.data == "sub_menu_coloristics")
 async def process_coloristics_placeholder(callback: types.CallbackQuery):
     await callback.answer()
@@ -71,56 +68,41 @@ async def process_coloristics_placeholder(callback: types.CallbackQuery):
         if lang == "ru" else
         "🚧 Розділ «Колористика» знаходиться в розробці.\n\nНезабаром тут з'являться матеріали!"
     )
-    # 👇 ВСТАВЛЯТЬ СЮДА 👇
+    
+    from aiogram.utils.keyboard import InlineKeyboardBuilder
+    from aiogram.types import InlineKeyboardButton
+    builder = InlineKeyboardBuilder()
+    back_btn_text = "◀️ Назад"
+    builder.row(InlineKeyboardButton(text=back_btn_text, callback_data="menu_colors"))
+    
+    await callback.message.edit_text(text, reply_markup=builder.as_markup(), parse_mode="Markdown")
 
 # 5. Обработчик для Цветового круга Иттена
 @router.callback_query(F.data == "color_itten")
 async def process_itten_circle(callback: types.CallbackQuery):
     await callback.answer()
     lang = user_language.get(callback.from_user.id, "ru")
-    
-    # Берем текст в зависимости от языка
     text = ITTEN_CIRCLE_TEXT.get(lang, ITTEN_CIRCLE_TEXT["ru"])
     
-    # Пытаемся удалить старое сообщение с меню, чтобы было красиво
+    # Отправляем фото из папки images
     try:
-        await callback.message.delete()
-    except Exception:
-        pass
-        
-    # Ссылка на картинку
-    ITTEN_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Itten_color_wheel.svg/1024px-Itten_color_wheel.svg.png"
-    
-    # Отправляем фото
-    try:
-        await callback.message.answer_photo(photo=ITTEN_IMAGE_URL)
+        photo = types.FSInputFile("images/itten.jpg") 
+        await callback.message.answer_photo(photo=photo)
     except Exception as e:
         print(f"Ошибка загрузки фото: {e}")
         
-    # Создаем кнопку "Назад" к главному меню цветов
+    # Кнопка "Назад"
     from aiogram.utils.keyboard import InlineKeyboardBuilder
-    from aiogram.types import InlineKeyboardButton
     builder = InlineKeyboardBuilder()
     back_text = "◀️ Назад к цветам" if lang == "ru" else "◀️ Назад до кольорів"
-    builder.row(InlineKeyboardButton(text=back_text, callback_data="menu_colors"))
+    builder.row(types.InlineKeyboardButton(text=back_text, callback_data="menu_colors"))
     
-    # Отправляем текст с правилами
+    # Отправляем текст с пояснением
     await callback.message.answer(
         text, 
         reply_markup=builder.as_markup(), 
         parse_mode="Markdown"
     )
 
-# 👆 КОНЕЦ ВСТАВКИ 👆
-    # Кнопка возврата в меню выбора (Цвета / Колористика)
-    from aiogram.utils.keyboard import InlineKeyboardBuilder
-    from aiogram.types import InlineKeyboardButton
-    builder = InlineKeyboardBuilder()
-    back_btn_text = "◀️ Назад" if lang == "ru" else "◀️ Назад"
-    builder.row(InlineKeyboardButton(text=back_btn_text, callback_data="menu_colors"))
-    
-    await callback.message.edit_text(text, reply_markup=builder.as_markup(), parse_mode="Markdown")
-
 def register_colors_handlers(dp):
     dp.include_router(router)
-
