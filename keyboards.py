@@ -182,10 +182,12 @@ def get_colors_main_menu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
     if lang == "ru":
         builder.row(InlineKeyboardButton(text="🎨 Цвета", callback_data="sub_menu_colors"))
         builder.row(InlineKeyboardButton(text="🌈 Колористика", callback_data="sub_menu_coloristics"))
+        builder.row(InlineKeyboardButton(text="🎨 Цветовой круг Иттена", callback_data="color_itten"))
         builder.row(InlineKeyboardButton(text="◀️ Главное меню", callback_data="back_to_main"))
     else:
         builder.row(InlineKeyboardButton(text="🎨 Кольори", callback_data="sub_menu_colors"))
         builder.row(InlineKeyboardButton(text="🌈 Колористика", callback_data="sub_menu_coloristics"))
+        builder.row(InlineKeyboardButton(text="🎨 Колірне коло Іттена", callback_data="color_itten"))
         builder.row(InlineKeyboardButton(text="◀️ Головне меню", callback_data="back_to_main"))
     return builder.as_markup()
 
