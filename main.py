@@ -58,11 +58,9 @@ async def main():
     register_materials_handlers(dp)
     register_sizes_handlers(dp)
     register_colors_handlers(dp)
-    register_main_menu_handlers(dp)
-
-    register_colors_handlers(dp)
     register_glossary_handlers(dp)
     register_assistant_handlers(dp)
+
     
     
     dp.message.register(cmd_start, lambda m: True)
