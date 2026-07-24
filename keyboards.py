@@ -376,5 +376,40 @@ def get_sizes_detail_keyboard(lang: str = "ru"):
         builder.row(InlineKeyboardButton(text="⬅️ Назад до Розмірів", callback_data="menu_sizes"))
         builder.row(InlineKeyboardButton(text="🏛 Головне меню", callback_data="menu_main"))
 
+    return builder.as_markup() 
+
+# Кнопки калькулятор и конвертеры 
+def get_calculators_menu_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    """Меню раздела Калькуляторы и Конвертеры"""
+    builder = InlineKeyboardBuilder()
+
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="📏 Конвертер размеров обуви", callback_data="calc_size_converter"))
+        builder.row(InlineKeyboardButton(text="⏳ Калькулятор 2 (Скоро)", callback_data="calc_soon_2"))
+        builder.row(InlineKeyboardButton(text="🧪 Калькулятор 3 (Скоро)", callback_data="calc_soon_3"))
+        builder.row(InlineKeyboardButton(text="📊 Калькулятор 4 (Скоро)", callback_data="calc_soon_4"))
+        builder.row(InlineKeyboardButton(text="🏛 Главное меню", callback_data="menu_main"))
+    else:  # uk
+        builder.row(InlineKeyboardButton(text="📏 Конвертер розмірів взуття", callback_data="calc_size_converter"))
+        builder.row(InlineKeyboardButton(text="⏳ Калькулятор 2 (Скоро)", callback_data="calc_soon_2"))
+        builder.row(InlineKeyboardButton(text="🧪 Калькулятор 3 (Скоро)", callback_data="calc_soon_3"))
+        builder.row(InlineKeyboardButton(text="📊 Калькулятор 4 (Скоро)", callback_data="calc_soon_4"))
+        builder.row(InlineKeyboardButton(text="🏛 Головне меню", callback_data="menu_main"))
+
     return builder.as_markup()
+
+
+def get_back_to_calculators_keyboard(lang: str = "ru") -> InlineKeyboardMarkup:
+    """Кнопка возврата в меню калькуляторов"""
+    builder = InlineKeyboardBuilder()
+    
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="⬅️ Назад к калькуляторам", callback_data="menu_calculators"))
+        builder.row(InlineKeyboardButton(text="🏛 Главное меню", callback_data="menu_main"))
+    else:  # uk
+        builder.row(InlineKeyboardButton(text="⬅️ Назад до калькуляторів", callback_data="menu_calculators"))
+        builder.row(InlineKeyboardButton(text="🏛 Головне меню", callback_data="menu_main"))
+
+    return builder.as_markup()
+
 
