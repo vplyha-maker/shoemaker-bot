@@ -15,6 +15,8 @@ from handlers.materials import register_materials_handlers
 from handlers.colors import register_colors_handlers
 from handlers.glossary import register_glossary_handlers
 from handlers.assistant import register_assistant_handlers
+from handlers.sizes import register_sizes_handlers
+
 
 
 
@@ -54,6 +56,10 @@ async def main():
     register_styles_handlers(dp)
     register_constructions_handlers(dp)
     register_materials_handlers(dp)
+    register_sizes_handlers(dp)
+    register_colors_handlers(dp)
+    register_main_menu_handlers(dp)
+
     register_colors_handlers(dp)
     register_glossary_handlers(dp)
     register_assistant_handlers(dp)
