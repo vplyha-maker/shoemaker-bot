@@ -16,6 +16,7 @@ from handlers.colors import register_colors_handlers
 from handlers.glossary import register_glossary_handlers
 from handlers.assistant import register_assistant_handlers
 from handlers.sizes import register_sizes_handlers
+from handlers.calculators import register_calculators_handlers
 
 
 
@@ -59,7 +60,8 @@ async def main():
     register_sizes_handlers(dp)
     register_colors_handlers(dp)
     register_glossary_handlers(dp)
-    register_assistant_handlers(dp)
+    register_assistant_handlers(dp) 
+    register_calculators_handlers(dp)
 
     
     
