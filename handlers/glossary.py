@@ -27,18 +27,30 @@ async def process_glossary_menu(callback: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
+
 # Подраздел: Материалы и детали
 @router.callback_query(F.data == "glossary_materials")
 async def process_glossary_materials(callback: types.CallbackQuery):
+    # 1. Обязательно отвечаем серверу Telegram в самом начале
     await callback.answer()
+    
+    # Определяем язык и нужный текст
     lang = user_language.get(callback.from_user.id, "ru")
     text = GLOSSARY_MATERIALS_RU if lang == "ru" else GLOSSARY_MATERIALS_UK
     
-    await callback.message.edit_text(
-        text, 
+    # 2. Удаляем старое сообщение (с кнопками, на которые нажал пользователь)
+    try:
+        await callback.message.delete()
+    except Exception:
+        pass # На случай, если сообщение уже было удалено
+        
+    # 3. Отправляем новое сообщение, сохраняя твою разметку Markdown и клавиатуру
+    await callback.message.answer(
+        text=text, 
         reply_markup=get_back_to_glossary_keyboard(lang), 
         parse_mode="Markdown"
     )
+
 
 # Подраздел: Процессы и технологии
 @router.callback_query(F.data == "glossary_processes")
