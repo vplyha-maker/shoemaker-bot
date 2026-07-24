@@ -19,6 +19,8 @@ from handlers.assistant import register_assistant_handlers
 
 
 
+
+
 from utils.keepalive import handle_ping, self_ping
 
 logging.basicConfig(
