@@ -14,7 +14,8 @@ router = Router()
     (F.data != "menu_colors") &
     (F.data != "menu_sizes") &        # <--- Добавили исключение для Размеров
     (F.data != "menu_glossary") &
-    (F.data != "menu_helper")                
+    (F.data != "menu_helper") &
+    (F.data != "menu_calculators")
 )
 async def process_main_menu(callback: types.CallbackQuery):
     """Обработка нажатий на главное меню для разделов-заглушек"""
