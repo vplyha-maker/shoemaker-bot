@@ -294,3 +294,54 @@ def get_back_to_assistant_keyboard(lang: str = "ru", back_callback: str = "menu_
     text = "◀️ К экспресс-помощнику" if lang == "ru" else "◀️ До експрес-помічника"
     builder.row(InlineKeyboardButton(text=text, callback_data=back_callback))
     return builder.as_markup()
+def get_colors_root_keyboard(lang: str = "ru"):
+    """Меню выбора: Цвета или Колористика"""
+    builder = InlineKeyboardBuilder()
+
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="🎨 Цвета", callback_data="colors_sub_colors"))
+        builder.row(InlineKeyboardButton(text="🧪 Колористика", callback_data="colors_sub_coloristics"))
+        builder.row(InlineKeyboardButton(text="⬅️ Главное меню", callback_data="menu_main"))
+    else:  # uk
+        builder.row(InlineKeyboardButton(text="🎨 Кольори", callback_data="colors_sub_colors"))
+        builder.row(InlineKeyboardButton(text="🧪 Колористика", callback_data="colors_sub_coloristics"))
+        builder.row(InlineKeyboardButton(text="⬅️ Головне меню", callback_data="menu_main"))
+
+    return builder.as_markup()
+
+#Кнопка Колористика #######################################################################₽₽₽₽₽₽₽₽₽₽₽₽₽₽₽₽₽
+
+def get_coloristics_menu_keyboard(lang: str = "ru"):
+    """Меню раздела Колористика (4 подраздела)"""
+    builder = InlineKeyboardBuilder()
+
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="📐 Архитектура Colorways", callback_data="colors_col_arch"))
+        builder.row(InlineKeyboardButton(text="🧪 Специфика материалов", callback_data="colors_col_mats"))
+        builder.row(InlineKeyboardButton(text="🎨 Технология окрашивания", callback_data="colors_col_tech"))
+        builder.row(InlineKeyboardButton(text="📊 Коммерческая палитра", callback_data="colors_col_comm"))
+        builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="menu_colors"))
+        builder.row(InlineKeyboardButton(text="🏛 Главное меню", callback_data="menu_main"))
+    else:  # uk
+        builder.row(InlineKeyboardButton(text="📐 Архітектура Colorways", callback_data="colors_col_arch"))
+        builder.row(InlineKeyboardButton(text="🧪 Специфіка матеріалів", callback_data="colors_col_mats"))
+        builder.row(InlineKeyboardButton(text="🎨 Технологія фарбування", callback_data="colors_col_tech"))
+        builder.row(InlineKeyboardButton(text="📊 Комерційна палітра", callback_data="colors_col_comm"))
+        builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="menu_colors"))
+        builder.row(InlineKeyboardButton(text="🏛 Головне меню", callback_data="menu_main"))
+
+    return builder.as_markup()
+
+
+def get_coloristics_detail_keyboard(lang: str = "ru"):
+    """Клавиатура возврата из статьи"""
+    builder = InlineKeyboardBuilder()
+
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="⬅️ Назад в Колористику", callback_data="colors_sub_coloristics"))
+        builder.row(InlineKeyboardButton(text="🏛 Главное меню", callback_data="menu_main"))
+    else:  # uk
+        builder.row(InlineKeyboardButton(text="⬅️ Назад до Колористики", callback_data="colors_sub_coloristics"))
+        builder.row(InlineKeyboardButton(text="🏛 Головне меню", callback_data="menu_main"))
+
+    return builder.as_markup()
