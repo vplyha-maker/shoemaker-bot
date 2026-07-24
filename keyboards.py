@@ -345,3 +345,36 @@ def get_coloristics_detail_keyboard(lang: str = "ru"):
         builder.row(InlineKeyboardButton(text="🏛 Головне меню", callback_data="menu_main"))
 
     return builder.as_markup()
+def get_sizes_menu_keyboard(lang: str = "ru"):
+    """Меню раздела Размеры, Мерки и Ортопедия"""
+    builder = InlineKeyboardBuilder()
+
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="📏 Как снять мерки", callback_data="sizes_measure"))
+        builder.row(InlineKeyboardButton(text="📋 Системы размеров", callback_data="sizes_tables"))
+        builder.row(InlineKeyboardButton(text="🦶 Ортопедия и патологии", callback_data="sizes_ortho"))
+        builder.row(InlineKeyboardButton(text="📌 Инструкция: Фото стопы", callback_data="sizes_photo"))
+        builder.row(InlineKeyboardButton(text="🏛 Главное меню", callback_data="menu_main"))
+    else:  # uk
+        builder.row(InlineKeyboardButton(text="📏 Як зняти мірки", callback_data="sizes_measure"))
+        builder.row(InlineKeyboardButton(text="📋 Системи розмірів", callback_data="sizes_tables"))
+        builder.row(InlineKeyboardButton(text="🦶 Ортопедія та патології", callback_data="sizes_ortho"))
+        builder.row(InlineKeyboardButton(text="📌 Інструкція: Фото стопи", callback_data="sizes_photo"))
+        builder.row(InlineKeyboardButton(text="🏛 Головне меню", callback_data="menu_main"))
+
+    return builder.as_markup()
+
+
+def get_sizes_detail_keyboard(lang: str = "ru"):
+    """Клавиатура возврата из статьи о размерах"""
+    builder = InlineKeyboardBuilder()
+
+    if lang == "ru":
+        builder.row(InlineKeyboardButton(text="⬅️ Назад к Размерам", callback_data="menu_sizes"))
+        builder.row(InlineKeyboardButton(text="🏛 Главное меню", callback_data="menu_main"))
+    else:  # uk
+        builder.row(InlineKeyboardButton(text="⬅️ Назад до Розмірів", callback_data="menu_sizes"))
+        builder.row(InlineKeyboardButton(text="🏛 Головне меню", callback_data="menu_main"))
+
+    return builder.as_markup()
+
