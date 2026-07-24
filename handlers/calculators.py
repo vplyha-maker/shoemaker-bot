@@ -103,7 +103,7 @@ async def process_gender_choice(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
 
 # 5. Расчет размера
-router.message(SizeConverterState.waiting_for_length)
+@router.message(SizeConverterState.waiting_for_length)
 async def calculate_size(message: Message, state: FSMContext):
     lang = await get_user_lang(state, message.from_user.language_code)
     t = CALCULATOR_TEXTS[lang]
@@ -149,4 +149,10 @@ async def calculate_size(message: Message, state: FSMContext):
         await state.clear()
         
     except ValueError:
-        await message.answer(t["error_num"])
+        await message.answer(t["error_num"])               
+        
+# 👇 ДОБАВЛЯТЬ СЮДА, В САМЫЙ КОНЕЦ ФАЙЛА 👇
+
+def register_calculators_handlers(dp):
+    """Регистрация роутера калькуляторов в главном диспетчере"""
+    dp.include_router(router)
