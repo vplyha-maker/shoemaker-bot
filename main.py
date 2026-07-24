@@ -5,6 +5,7 @@ from aiohttp import web
 
 from aiogram import Bot, Dispatcher
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+from aiogram.filters import StateFilter # <--- ДОБАВЛЕН ИМПОРТ ФИЛЬТРА
 
 from config import BOT_TOKEN
 from handlers.base import cmd_start, process_language
@@ -17,12 +18,6 @@ from handlers.glossary import register_glossary_handlers
 from handlers.assistant import register_assistant_handlers
 from handlers.sizes import register_sizes_handlers
 from handlers.calculators import register_calculators_handlers
-
-
-
-
-
-
 
 from utils.keepalive import handle_ping, self_ping
 
@@ -64,8 +59,8 @@ async def main():
     register_calculators_handlers(dp)
 
     
-    
-    dp.message.register(cmd_start, lambda m: True)
+    # 👇 ИЗМЕНЕНА ЭТА СТРОКА: Бот выдает меню, только если ничего не ждет от пользователя
+    dp.message.register(cmd_start, StateFilter(None))
     dp.callback_query.register(process_language, lambda c: c.data.startswith("lang_"))
 
     app = web.Application()
