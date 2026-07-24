@@ -3,7 +3,8 @@ from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKe
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 
-from keyboards import get_calculators_keyboard, get_main_keyboard
+# Убедись, что эти функции есть в keyboards.py!
+from keyboards import get_calculators_menu_keyboard, get_main_menu
 from texts.calculators_texts import CALCULATOR_TEXTS
 
 router = Router()
@@ -48,6 +49,7 @@ async def get_user_lang(state: FSMContext, user_lang_code: str) -> str:
         return data["lang"]
     return "uk" if user_lang_code and "uk" in user_lang_code.lower() else "ru"
 
+
 def get_gender_inline_keyboard(lang: str):
     t = CALCULATOR_TEXTS.get(lang, CALCULATOR_TEXTS["ru"])
     return InlineKeyboardMarkup(
@@ -58,33 +60,37 @@ def get_gender_inline_keyboard(lang: str):
             ],
             [
                 InlineKeyboardButton(text=t["gender_kids"], callback_data="gender_kids")
+            ],
+            [
+                InlineKeyboardButton(text="⬅️ Назад" if lang == "ru" else "⬅️ Назад", callback_data="menu_calculators")
             ]
         ]
     )
 
-# 1. Открытие меню калькуляторов (ловит кнопки на обоих языках)
-@router.message(F.text.in_(["🧮 Калькуляторы и конвертеры", "🧮 Калькулятори та конвертери"]))
-async def open_calculators_menu(message: Message, state: FSMContext):
-    lang = await get_user_lang(state, message.from_user.language_code)
+# 1. Открытие меню калькуляторов (Инлайн-кнопка из главного меню)
+@router.callback_query(F.data == "menu_calculators")
+async def open_calculators_menu(callback: CallbackQuery, state: FSMContext):
+    await state.clear() # Сбрасываем состояния на всякий случай
+    lang = await get_user_lang(state, callback.from_user.language_code)
     t = CALCULATOR_TEXTS[lang]
-    await message.answer(t["menu_title"], reply_markup=get_calculators_keyboard(lang))
+    await callback.message.edit_text(
+        t["menu_title"], 
+        reply_markup=get_calculators_menu_keyboard(lang)
+    )
+    await callback.answer()
 
-# 2. Кнопка Назад
-@router.message(F.text.in_(["🔙 Назад в главное меню", "🔙 Назад у головне меню"]))
-async def back_to_main_menu(message: Message, state: FSMContext):
-    lang = await get_user_lang(state, message.from_user.language_code)
+# 2. Нажатие на кнопку "Конвертер размеров" (Инлайн-кнопка)
+@router.callback_query(F.data == "calc_size_converter")
+async def start_size_converter(callback: CallbackQuery, state: FSMContext):
+    lang = await get_user_lang(state, callback.from_user.language_code)
     t = CALCULATOR_TEXTS[lang]
-    await state.clear()
-    await message.answer(t["back_msg"], reply_markup=get_main_keyboard())
+    await callback.message.edit_text(
+        t["select_gender"], 
+        reply_markup=get_gender_inline_keyboard(lang)
+    )
+    await callback.answer()
 
-# 3. Нажатие на кнопку "Размеры обуви"
-@router.message(F.text.in_(["📏 Размеры обуви", "📏 Розміри взуття"]))
-async def start_size_converter(message: Message, state: FSMContext):
-    lang = await get_user_lang(state, message.from_user.language_code)
-    t = CALCULATOR_TEXTS[lang]
-    await message.answer(t["select_gender"], reply_markup=get_gender_inline_keyboard(lang))
-
-# 4. Выбор пола
+# 3. Выбор пола (Инлайн-кнопки гендера)
 @router.callback_query(F.data.startswith("gender_"))
 async def process_gender_choice(callback: CallbackQuery, state: FSMContext):
     lang = await get_user_lang(state, callback.from_user.language_code)
@@ -102,26 +108,15 @@ async def process_gender_choice(callback: CallbackQuery, state: FSMContext):
     )
     await callback.answer()
 
-# 5. Расчет размера
+# 4. Расчет размера (Ожидание ввода текста)
 @router.message(SizeConverterState.waiting_for_length)
 async def calculate_size(message: Message, state: FSMContext):
     lang = await get_user_lang(state, message.from_user.language_code)
     t = CALCULATOR_TEXTS[lang]
     
-    # ПРАВИЛЬНЫЙ ВЫХОД ИЗ СОСТОЯНИЯ:
-    # 1. Если нажали "Назад"
-    if message.text in ["🔙 Назад в главное меню", "🔙 Назад у головне меню"]:
+    # Если пользователь ввел команду (например, /start) вместо цифр
+    if message.text.startswith('/'):
         await state.clear()
-        await message.answer(t["back_msg"], reply_markup=get_main_keyboard())
-        return
-
-    # 2. Если нажали другие кнопки меню
-    if message.text in [
-        "📏 Размеры обуви", "📏 Розміри взуття",
-        "🧮 Калькуляторы и конвертеры", "🧮 Калькулятори та конвертери"
-    ]:
-        await state.clear()
-        await message.answer(t["menu_title"], reply_markup=get_calculators_keyboard(lang))
         return
 
     data = await state.get_data()
@@ -145,13 +140,17 @@ async def calculate_size(message: Message, state: FSMContext):
             match=cm_match
         )
         
-        await message.answer(text, parse_mode="HTML", reply_markup=get_calculators_keyboard(lang))
+        # Выдаем результат и прикрепляем меню калькуляторов, чтобы продолжить работу
+        await message.answer(
+            text, 
+            parse_mode="HTML", 
+            reply_markup=get_calculators_menu_keyboard(lang)
+        )
         await state.clear()
         
     except ValueError:
-        await message.answer(t["error_num"])               
-        
-# 👇 ДОБАВЛЯТЬ СЮДА, В САМЫЙ КОНЕЦ ФАЙЛА 👇
+        await message.answer(t["error_num"])
+
 
 def register_calculators_handlers(dp):
     """Регистрация роутера калькуляторов в главном диспетчере"""
