@@ -103,18 +103,25 @@ async def process_gender_choice(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
 
 # 5. Расчет размера
-@router.message(SizeConverterState.waiting_for_length)
+router.message(SizeConverterState.waiting_for_length)
 async def calculate_size(message: Message, state: FSMContext):
     lang = await get_user_lang(state, message.from_user.language_code)
     t = CALCULATOR_TEXTS[lang]
     
-    # Если пользователь решил выйти в меню во время ввода
+    # ПРАВИЛЬНЫЙ ВЫХОД ИЗ СОСТОЯНИЯ:
+    # 1. Если нажали "Назад"
+    if message.text in ["🔙 Назад в главное меню", "🔙 Назад у головне меню"]:
+        await state.clear()
+        await message.answer(t["back_msg"], reply_markup=get_main_keyboard())
+        return
+
+    # 2. Если нажали другие кнопки меню
     if message.text in [
-        "🔙 Назад в главное меню", "🔙 Назад у головне меню",
         "📏 Размеры обуви", "📏 Розміри взуття",
         "🧮 Калькуляторы и конвертеры", "🧮 Калькулятори та конвертери"
     ]:
         await state.clear()
+        await message.answer(t["menu_title"], reply_markup=get_calculators_keyboard(lang))
         return
 
     data = await state.get_data()
